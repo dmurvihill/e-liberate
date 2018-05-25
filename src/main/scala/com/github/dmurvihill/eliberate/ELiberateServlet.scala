@@ -1,5 +1,6 @@
 package com.github.dmurvihill.eliberate
 
+import com.github.dmurvihill.eliberate.auth.AuthenticationSupport
 import org.scalatra._
 
 class ELiberateServlet extends ScalatraServlet with AuthenticationSupport {

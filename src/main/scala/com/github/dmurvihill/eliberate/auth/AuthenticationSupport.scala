@@ -1,5 +1,6 @@
-package com.github.dmurvihill.eliberate
+package com.github.dmurvihill.eliberate.auth
 
+import com.github.dmurvihill.eliberate.User
 import org.scalatra.auth.ScentrySupport
 import org.scalatra.auth.ScentryConfig
 import org.scalatra.auth.strategy.BasicAuthSupport
@@ -25,6 +26,6 @@ trait AuthenticationSupport extends ScentrySupport[User] with BasicAuthSupport[U
     }
 
     override protected def registerAuthStrategies = {
-        scentry.register("Basic", app => new OurBasicAuthStrategy(app, realm))
+        scentry.register("Basic", app => new ELiberateAuthStrategy(app, realm))
     }
 }
