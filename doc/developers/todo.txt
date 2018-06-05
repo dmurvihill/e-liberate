@@ -1,6 +1,6 @@
 TO DO
 As a member, I would like to be able to vote on pending motions so that we can decide whether they should take effect.
-As a member, I would like to be able to see the roll call for a motion before and after it expires so that I can lobby my peers and hold them accountable for their votes.
+As a member, I would like to be able to see the roll call for a motion so that I can lobby my peers and hold them accountable for their votes.
 As a member, I would like for votes to expire so that motions can take effect in reasonable time.
 As a constituent, I would like to be able to see all adopted motions so that I know what the rules are.
 As a member, I would like to be able to update my vote before the time expires.

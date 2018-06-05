@@ -1,11 +1,10 @@
 @import com.github.dmurvihill.eliberate.User
 @import com.github.dmurvihill.eliberate.Motion
-@(user: User, motions: List[Motion])
+@(user: User, motion: Motion)
 
 @layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
   <p>Hello, @(user.username)!</p>
-  <h2>Pending Motions</h2>
-  @for(motion <- motions) {
-    <p><a href="/motion/@(motion.id)">Read</a> @(motion.title)</p>
-  }
+  <h2>@(motion.title)</h2>
+  <p>@(motion.text)</p>
+  <p><a href="/">back</a></p>
 }
