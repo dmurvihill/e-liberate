@@ -13,7 +13,7 @@ trait AuthenticationSupport extends ScentrySupport[User] with BasicAuthSupport[U
 
     val realm = "E-Liberate"
 
-    protected def fromSession = { case id: String => User(id) }
+    protected def fromSession = { case id: String => User("scalatra", "opensesame") }
     protected def toSession = { case usr: User => "scalatra" }
 
     protected val scentryConfig = (new ScentryConfig {}).asInstanceOf[ScentryConfiguration]

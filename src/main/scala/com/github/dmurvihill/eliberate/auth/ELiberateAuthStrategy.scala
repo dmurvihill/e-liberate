@@ -19,7 +19,8 @@ class ELiberateAuthStrategy(protected override val app: ScalatraBase, realm: Str
 object ELiberateAuthStrategy {
 
   def checkPassword(username: String, password: String): Option[User] = {
-    if(password == "opensesame") Some(User(username))
+    val user = User.get(username)
+    if(password == user.password) Some(user)
     else None
   }
 

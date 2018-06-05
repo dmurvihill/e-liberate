@@ -7,17 +7,21 @@ import org.scalatra.ScalatraBase
 import org.scalatra.test.scalatest.ScalatraFunSuite
 
 
+
 class ELiberateAuthStrategyTests extends ScalatraFunSuite {
+
+  val aladdin_user = User("Aladdin", "opensesame")
+  val jasmine_user = User("Jasmine", "showmetheworld")
+  val jafar_user = User("Jafar", "open sesame")
+
   test("checkPassword as Aladdin should return the Aladdin user") {
     val actualUser = ELiberateAuthStrategy.checkPassword("Aladdin", "opensesame")
-    val expectedUser = Some(User("Aladdin"))
-    assert(actualUser == expectedUser)
+    assert(actualUser == Some(aladdin_user))
   }
 
   test("checkPassword as Jafar should return the Jafar user") {
-    val actualUser = ELiberateAuthStrategy.checkPassword("Jafar", "opensesame")
-    val expectedUser = Some(User("Jafar"))
-    assert(actualUser == expectedUser)
+    val actualUser = ELiberateAuthStrategy.checkPassword("Jafar", "open sesame")
+    assert(actualUser == Some(jafar_user))
   }
 
   test("checkPassword with incorrect password should return None") {
@@ -25,10 +29,10 @@ class ELiberateAuthStrategyTests extends ScalatraFunSuite {
   }
 
   test("getUserId on Aladdin returns Aladdin's username") {
-    assert(ELiberateAuthStrategy.getUserId(User("Aladdin")) == "Aladdin")
+    assert(ELiberateAuthStrategy.getUserId(aladdin_user) == "Aladdin")
   }
 
   test("getUserId on Jasmine returns Jasmine's username") {
-    assert(ELiberateAuthStrategy.getUserId(User("Jasmine")) == "Jasmine")
+    assert(ELiberateAuthStrategy.getUserId(jasmine_user) == "Jasmine")
   }
 }
