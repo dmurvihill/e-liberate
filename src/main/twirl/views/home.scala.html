@@ -1,0 +1,7 @@
+@import com.github.dmurvihill.eliberate.User
+@(user: User)
+
+@layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
+  <p>Hello, @(user.username)!</p>
+
+}

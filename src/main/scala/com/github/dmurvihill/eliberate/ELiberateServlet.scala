@@ -7,7 +7,6 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport {
 
   get("/") {
     val user: User = basicAuth.get
-    views.html.hello(user)
+    views.html.home(user)
   }
-
 }
