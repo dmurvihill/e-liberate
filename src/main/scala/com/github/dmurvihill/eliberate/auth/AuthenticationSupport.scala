@@ -18,7 +18,6 @@ trait AuthenticationSupport extends ScentrySupport[User] with BasicAuthSupport[U
 
     protected val scentryConfig = (new ScentryConfig {}).asInstanceOf[ScentryConfiguration]
 
-
     override protected def configureScentry = {
         scentry.unauthenticated {
             scentry.strategies("Basic").unauthenticated()
