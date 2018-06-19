@@ -1,0 +1,10 @@
+@(errors: Seq[(String, String)])
+
+@layouts.html.default("E-Liberate demo org", "Invalid input") {
+  <table>
+  <tr><td>param</td><td>error</td></tr>
+  @for((param, error) <- errors) {
+    <tr><td>param</td><td>error</td></tr>
+  }
+  </table>
+}

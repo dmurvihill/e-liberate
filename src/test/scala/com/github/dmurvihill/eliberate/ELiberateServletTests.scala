@@ -6,6 +6,7 @@ import org.scalatra.test.scalatest._
 class ELiberateServletTests extends ScalatraFunSuite {
 
   addServlet(classOf[ELiberateServlet], "/*")
+  val aladdin_auth_headers = Seq[(String, String)](basicAuthCredentials("Aladdin", "opensesame"))
 
   test("GET / on ELiberateServlet with no authentication should return status 401") {
     get("/") {
@@ -20,8 +21,14 @@ class ELiberateServletTests extends ScalatraFunSuite {
   }
 
   test("GET / on ELiberateServlet with valid authentication should return status 200") {
-    get("/", Seq.empty, Seq[(String, String)](basicAuthCredentials("Aladdin", "opensesame"))) {
+    get("/", Seq.empty, aladdin_auth_headers) {
       status should equal(200)
+    }
+  }
+
+  test("GET on nonexsitent motion should return status 404") {
+    get("/motion/3", None, aladdin_auth_headers) {
+      status should equal(404)
     }
   }
 

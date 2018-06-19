@@ -1,6 +1,7 @@
 @import com.github.dmurvihill.eliberate.User
 @import com.github.dmurvihill.eliberate.Motion
-@(user: User, motions: List[Motion])
+@import org.scalatra.forms.views._
+@(user: User, motions: Iterable[Motion])(implicit request: javax.servlet.http.HttpServletRequest)
 
 @layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
   <p>Hello, @(user.username)!</p>
@@ -8,4 +9,10 @@
   @for(motion <- motions) {
     <p><a href="/motion/@(motion.id)">Read</a> @(motion.title)</p>
   }
+  <h2>Make a Motion</h2>
+    <form action="/motion" method="POST">
+    @Html(text("title"))
+    @Html(textarea("text"))
+    <input type="submit" value="Make Motion">
+    </form>
 }
