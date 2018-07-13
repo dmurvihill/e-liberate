@@ -2,6 +2,7 @@ package com.github.dmurvihill.eliberate
 
 import com.github.dmurvihill.eliberate.auth.AuthenticationSupport
 import com.github.dmurvihill.eliberate.form.MotionToAdoptForm
+import com.github.dmurvihill.eliberate.form.VoteForm
 import org.scalatra._
 import org.scalatra.forms.FormSupport
 import org.scalatra.i18n.I18nSupport
@@ -33,6 +34,21 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
       (form: MotionToAdoptForm) => {
         val motion = Motion.create(form)
         redirect("/motion/"+motion.id)
+      }
+    )
+  }
+
+  post("/motion/:id/vote") {
+    val user: User = basicAuth.get
+    val id = params("id").toInt
+    validate(VoteForm.form)(
+      (errors: Seq[(String, String)]) => {
+        BadRequest(views.html.error(errors))
+      },
+      (form: VoteForm) => {
+        val vote = Vote.withName(form.vote)
+        val motion = Motion.vote(id, user, vote)
+        views.html.motion(user, motion)
       }
     )
   }

@@ -5,6 +5,14 @@
 @layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
   <p>Hello, @(user.username)!</p>
   <h2>@(motion.title)</h2>
+  <form action="/motion/@(motion.id)/vote" method="post">
+    <input type="hidden" name="vote" value="Yes">
+    <input type="submit" value="Vote YES">
+  </form>
+  <form action="/motion/@(motion.id)/vote" method="post">
+    <input type="hidden" name="vote" value="No">
+    <input type="submit" value="Vote NO">
+  </form>
   <p>@(motion.text)</p>
   <p><a href="/">back</a></p>
 }
