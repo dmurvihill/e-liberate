@@ -1,6 +1,5 @@
 TO DO
 Exception on non-integer motion ID
-As a member, I would like to be able to see the roll call for a motion so that I can lobby my peers and hold them accountable for their votes.
 As a member, I would like for votes to expire so that motions can take effect in reasonable time.
 As a constituent, I would like to be able to see all adopted motions so that I know what the rules are.
 As a member, I would like to be able to update my vote before the time expires.

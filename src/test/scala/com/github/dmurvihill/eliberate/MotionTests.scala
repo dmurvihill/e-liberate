@@ -35,6 +35,23 @@ class MotionTests extends FunSuite {
     val newMotion = m.vote(aladdin, Vote.Yes)
     assert(newMotion.rollCall(aladdin) == Vote.Yes)
   }
+
+  test("votersByVote returns a set for each possible vote") {
+    val usersWhoVoted = testMotion.votersByVote
+    for (vote <- Vote.values) {
+      assert(usersWhoVoted(vote) == Set.empty[User])
+    }
+  }
+
+  test("votersByVote groups users by their vote") {
+    val rollCall = Map[User, Vote.Value](aladdin -> Vote.Yes, jafar -> Vote.No)
+    val m = Motion(1, "test motion", "test text", rollCall)
+
+    assert(m.votersByVote == Map[Vote.Value, Set[User]](
+      Vote.Yes -> Set[User](aladdin),
+      Vote.No -> Set[User](jafar)
+    ))
+  }
 }
 
 class MotionObjectTests extends FunSuite {

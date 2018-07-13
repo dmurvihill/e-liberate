@@ -8,9 +8,17 @@ case class Motion(id: Int,
                   title: String,
                   text: String,
                   rollCall: Motion.RollCall = Map.empty[User, Vote.Value]) {
+
+  lazy val votersByVote = {
+    val groupedByVote = rollCall.toList.groupBy(_._2)
+    val unpackedFromTuples = groupedByVote.mapValues(_.map(_._1))
+    unpackedFromTuples.mapValues(_.toSet).withDefaultValue(Set.empty[User])
+  }
+
   def vote(user: User, vote: Vote.Value): Motion = {
     Motion(id, title, text, rollCall + (user -> vote))
   }
+
 }
 
 object Motion {

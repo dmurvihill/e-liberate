@@ -1,19 +1,37 @@
 @import com.github.dmurvihill.eliberate.User
 @import com.github.dmurvihill.eliberate.Motion
+@import com.github.dmurvihill.eliberate.Vote
 @(user: User, motion: Motion)
 
+@getRollCallRows(votersByVote: Map[Vote.Value, Set[User]]) = @{
+  val yesVoters = votersByVote(Vote.Yes)
+  val noVoters = votersByVote(Vote.No)
+  yesVoters.map(_.username) zipAll (noVoters.map(_.username), "", "")
+}
+
+@rollCallTable(votersByVote: Map[Vote.Value, Set[User]]) = {
+  <table>
+  <tr>
+    <th>YES (@(votersByVote(Vote.Yes).size))</th>
+    <th>NO (@(votersByVote(Vote.No).size))</th>
+  </tr>
+  @getRollCallRows(votersByVote).map { row => <tr><td>@(row._1)</td><td>@(row._2)</td></tr> }
+  </table>
+}
+
 @layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
+
   <p>Hello, @(user.username)!</p>
   <h2>@(motion.title)</h2>
   <form action="/motion/@(motion.id)/vote" method="post">
-    <input type="hidden" name="vote" value="Yes">
-    <input type="submit" value="Vote YES">
+    <input type="hidden" name="vote" value="Yes" />
+    <input type="submit" value="Vote YES" />
   </form>
   <form action="/motion/@(motion.id)/vote" method="post">
-    <input type="hidden" name="vote" value="No">
-    <input type="submit" value="Vote NO">
+    <input type="hidden" name="vote" value="No" />
+    <input type="submit" value="Vote NO" />
   </form>
+  @rollCallTable(motion.votersByVote)
   <p>@(motion.text)</p>
   <p><a href="/">back</a></p>
 }
-
