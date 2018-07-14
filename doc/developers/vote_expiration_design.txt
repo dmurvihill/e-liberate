@@ -1,0 +1,35 @@
+Feature: Vote expiration
+
+Stories:
+As a member, I would like for votes to expire so that motions can take effect in reasonable time.
+As a member, I would like to know what the deadline is to vote on a motion so that I can debate and vote in a timely manner.
+
+Acceptance criteria:
+  - When a motion is made, the deadline is set to 24 hours from the date it was moved.
+  - Clicking a vote button before the deadline sets or updates the user's vote
+  - Clicking a vote button after the deadline displays an error message explaining that the vote has expired.
+  - Vote buttons do not load after a motion's deadline has passed. Instead, a message appears explaining that voting is closed.
+  - The deadline is visible on the motion detail page for motions that have not expired.
+
+Implementation:
+Motion class:
+  Add a "deadline" value to the constructor
+  Add a parameter isExpiredAt(date: Instant): Boolean to the Motion class.
+  Add a parameter votedAt: Instant to the vote method, and raise an IllegalArgumentException if we are expired after the deadline. We need to take a date as an argument because the Motion class is stateless -- it cannot check the clock.
+
+Motion companion object:
+  Add an argument votedAt to the vote method, and pass it to the new parameter in the Motion class method.
+  If vote catches an IllegalArgumentException, raise an IllegalStateException explaining that voting is over.
+
+Motion detail view:
+  Accept a "now" parameter of type Instant that represents the time of the request.
+  Add an if-else clause to display either the button panel or a message explaining voting has expired.
+  For nonexpired motions, display the deadline.
+
+Error detail view:
+  Add a parameter for what URL to link the user to.
+  Add a link to that URL below the error details.
+
+Servlet:
+  If we catch an IllegalStateException or fail form validation on the post vote route, render the error view, with a link to the motion the user tried to vote on.
+  If we fail form validation on the post motion route, render the error view with a link to the homepage.
