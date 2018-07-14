@@ -7,8 +7,11 @@ import org.scalatra._
 import org.scalatra.forms.FormSupport
 import org.scalatra.i18n.I18nSupport
 import scala.collection.mutable
+import scala.util.matching.Regex
 
 class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with FormSupport with I18nSupport{
+
+  val IntMatch = new Regex("\\d+")
 
   get("/") {
     val user: User = basicAuth.get
@@ -18,10 +21,12 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
 
   get("/motion/:id") {
     val user: User = basicAuth.get
-    val motion_id = params("id").toInt
-    Motion.get(motion_id) match {
-      case Some(motion) => views.html.motion(user, motion)
-      case None => NotFound()
+    params("id") match {
+      case IntMatch() => {
+        val id = params("id").toInt
+        getMotion(id)
+      }
+      case _ => NotFound()
     }
   }
 
@@ -40,16 +45,29 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
 
   post("/motion/:id/vote") {
     val user: User = basicAuth.get
-    val id = params("id").toInt
+    params("id") match {
+      case IntMatch() => {
+        postVote(params("id").toInt)
+      }
+      case _ => NotFound()
+    }
+  }
+
+  def getMotion(id: Int) =
+    Motion.get(id) match {
+      case Some(motion) => views.html.motion(user, motion)
+      case None => NotFound()
+    }
+
+  def postVote(motionId: Int) =
     validate(VoteForm.form)(
       (errors: Seq[(String, String)]) => {
         BadRequest(views.html.error(errors))
       },
       (form: VoteForm) => {
         val vote = Vote.withName(form.vote)
-        val motion = Motion.vote(id, user, vote)
+        val motion = Motion.vote(motionId, user, vote)
         views.html.motion(user, motion)
       }
     )
-  }
 }

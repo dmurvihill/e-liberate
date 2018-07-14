@@ -1,5 +1,4 @@
 TO DO
-Exception on non-integer motion ID
 As a member, I would like for votes to expire so that motions can take effect in reasonable time.
 As a member, I would like to know what the deadline is to vote on a motion so that I can debate and vote in a timely manner.
 As a constituent, I would like to be able to see all adopted motions so that I know what the rules are.

@@ -32,6 +32,18 @@ class ELiberateServletTests extends ScalatraFunSuite {
     }
   }
 
+  test("GET with non-integer motion ID should return status 404") {
+    get("/motion/one", None, aladdin_auth_headers) {
+      status should equal(404)
+    }
+  }
+
+  test("POST vote with non-integer motion ID should return status 404") {
+    post("/motion/one/vote", List(("vote", "Yes")), List.empty, aladdin_auth_headers) {
+      status should equal(404)
+    }
+  }
+
   private def basicAuthCredentials(username: String, password: String): (String, String) = {
     val rawCredentials = username + ":" + password
     val encCredentials = Base64.getEncoder().encodeToString(rawCredentials)
