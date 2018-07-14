@@ -1,11 +1,14 @@
 TO DO
 As a member, I would like for votes to expire so that motions can take effect in reasonable time.
 As a member, I would like to know what the deadline is to vote on a motion so that I can debate and vote in a timely manner.
-As a constituent, I would like to be able to see all adopted motions so that I know what the rules are.
-As a member, I would like to be able to update my vote before the time expires.
+
+As a user, I would like motions to be persisted in a database so that we don't lose our entire archive whenever Dolan trips over the power cord.
+
 As a user, I would like to log out so that other people can log in and so that other people can't hijack my session.
 As a user, I would like to be confident that my password does not appear in a bunch of log files.
 As a user, I would like my password to be stored in a database rather than checked in to Git so that people can't just see it on GitHub and so that I can change it without waiting for a release.
-As a user, I would like motions to be persisted in a database so that we don't lose our entire archive whenever Dolan trips over the power cord.
 As a user, I would like my password to be hashed and salted so that if it is stoled by haxxorz they will not be able to use it to log in.
 As a user, I would like for exception traces to be hidden from web visitors so that attackers find it harder to recon the server, so that they have more difficulty compromising my info.
+
+As a member, I would like to see the status of a motion on the motion detail view.
+As a constituent, I would like motions to be placed in separate areas depending on their status so that it's easy to get a view of the organization's status at a glance.

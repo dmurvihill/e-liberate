@@ -5,7 +5,7 @@
 
 @layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
   <p>Hello, @(user.username)!</p>
-  <h2>Pending Motions</h2>
+  <h2>All Motions</h2>
   @for(motion <- motions) {
     <p><a href="/motion/@(motion.id)">Read</a> @(motion.title)</p>
   }
