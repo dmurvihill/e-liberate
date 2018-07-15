@@ -1,6 +1,4 @@
 TO DO
-As a member, I would like for votes to expire so that motions can take effect in reasonable time.
-As a member, I would like to know what the deadline is to vote on a motion so that I can debate and vote in a timely manner.
 
 Exception when submitting a username that does not exist.
 As a user, I would like motions to be persisted in a database so that we don't lose our entire archive whenever Dolan trips over the power cord.

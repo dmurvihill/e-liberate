@@ -1,7 +1,8 @@
 @import com.github.dmurvihill.eliberate.User
 @import com.github.dmurvihill.eliberate.Motion
 @import com.github.dmurvihill.eliberate.Vote
-@(user: User, motion: Motion)
+@import java.time.Instant
+@(user: User, motion: Motion, now: Instant)
 
 @getRollCallRows(votersByVote: Map[Vote.Value, Set[User]]) = @{
   val yesVoters = votersByVote(Vote.Yes)
@@ -19,10 +20,8 @@
   </table>
 }
 
-@layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
-
-  <p>Hello, @(user.username)!</p>
-  <h2>@(motion.title)</h2>
+@buttonPanel = {
+  <p>This vote will end on @motion.deadline (UTC)</p>
   <form action="/motion/@(motion.id)/vote" method="post">
     <input type="hidden" name="vote" value="Yes" />
     <input type="submit" value="Vote YES" />
@@ -31,6 +30,15 @@
     <input type="hidden" name="vote" value="No" />
     <input type="submit" value="Vote NO" />
   </form>
+}
+
+@expiredNotice = {<p>The vote on this motion ended on @motion.deadline (UTC)</p>}
+
+@layouts.html.default("E-Liberate demo org", "E-Liberate Demo"){
+
+  <p>Hello, @(user.username)!</p>
+  <h2>@(motion.title)</h2>
+  @if(motion.isExpiredAt(now)){@expiredNotice}else{@buttonPanel}
   @rollCallTable(motion.votersByVote)
   <p>@(motion.text)</p>
   <p><a href="/">back</a></p>

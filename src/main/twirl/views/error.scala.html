@@ -1,10 +1,11 @@
-@(errors: Seq[(String, String)])
+@(errors: Seq[(String, String)], nextPageUri: String)
 
 @layouts.html.default("E-Liberate demo org", "Invalid input") {
   <table>
-  <tr><td>param</td><td>error</td></tr>
+  <tr><th>param</th><th>error</th></tr>
   @for((param, error) <- errors) {
-    <tr><td>param</td><td>error</td></tr>
+    <tr><td>@param</td><td>@error</td></tr>
   }
   </table>
+  <p><a href="@nextPageUri">Back</a></p>
 }

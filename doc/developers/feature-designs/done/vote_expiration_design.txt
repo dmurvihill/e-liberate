@@ -5,11 +5,11 @@ As a member, I would like for votes to expire so that motions can take effect in
 As a member, I would like to know what the deadline is to vote on a motion so that I can debate and vote in a timely manner.
 
 Acceptance criteria:
-  - When a motion is made, the deadline is set to 24 hours from the date it was moved.
-  - Clicking a vote button before the deadline sets or updates the user's vote
-  - Clicking a vote button after the deadline displays an error message explaining that the vote has expired.
-  - Vote buttons do not load after a motion's deadline has passed. Instead, a message appears explaining that voting is closed.
-  - The deadline is visible on the motion detail page for motions that have not expired.
+  + When a motion is made, the deadline is set to 24 hours from the date it was moved.
+  + Clicking a vote button before the deadline sets or updates the user's vote
+  + Clicking a vote button after the deadline displays an error message explaining that the vote has expired.
+  + Vote buttons do not load after a motion's deadline has passed. Instead, a message appears explaining that voting is closed.
+  + The deadline is visible on the motion detail page for motions that have not expired.
 
 Implementation:
 Motion class:

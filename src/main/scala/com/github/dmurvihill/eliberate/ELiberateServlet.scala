@@ -3,6 +3,7 @@ package com.github.dmurvihill.eliberate
 import com.github.dmurvihill.eliberate.auth.AuthenticationSupport
 import com.github.dmurvihill.eliberate.form.MotionToAdoptForm
 import com.github.dmurvihill.eliberate.form.VoteForm
+import java.time.Instant
 import org.scalatra._
 import org.scalatra.forms.FormSupport
 import org.scalatra.i18n.I18nSupport
@@ -16,7 +17,7 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
   get("/") {
     val user: User = basicAuth.get
     val motions = Motion.getAll()
-    views.html.home(user, motions)  // TODO pass an immutable view on motions
+    views.html.home(user, motions)
   }
 
   get("/motion/:id") {
@@ -31,13 +32,14 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
   }
 
   post("/motion") {
+    val createdAt: Instant = Instant.now
     val user: User = basicAuth.get
     validate(MotionToAdoptForm.form)(
       (errors: Seq[(String, String)]) => {
-        BadRequest(views.html.error(errors))
+        BadRequest(views.html.error(errors, "/"))
       },
       (form: MotionToAdoptForm) => {
-        val motion = Motion.create(form)
+        val motion = Motion.create(form, createdAt)
         redirect("/motion/"+motion.id)
       }
     )
@@ -47,7 +49,8 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
     val user: User = basicAuth.get
     params("id") match {
       case IntMatch() => {
-        postVote(params("id").toInt)
+        val motionId = params("id").toInt
+        tryToVoteOn(motionId)
       }
       case _ => NotFound()
     }
@@ -55,19 +58,29 @@ class ELiberateServlet extends ScalatraServlet with AuthenticationSupport with F
 
   def getMotion(id: Int) =
     Motion.get(id) match {
-      case Some(motion) => views.html.motion(user, motion)
+      case Some(motion) => views.html.motion(user, motion, Instant.now)
       case None => NotFound()
     }
 
-  def postVote(motionId: Int) =
+  def tryToVoteOn(motionId: Int) = {
     validate(VoteForm.form)(
       (errors: Seq[(String, String)]) => {
-        BadRequest(views.html.error(errors))
+        BadRequest(views.html.error(errors, "/motion/" + motionId))
       },
-      (form: VoteForm) => {
-        val vote = Vote.withName(form.vote)
-        val motion = Motion.vote(motionId, user, vote)
-        views.html.motion(user, motion)
-      }
+      postVote(motionId)
     )
+  }
+
+  def postVote(motionId: Int)(form: VoteForm) = {
+    val vote = Vote.withName(form.vote)
+    val now = Instant.now
+    val parentUri = "/motion/" + motionId
+    try {
+      val motion = Motion.vote(motionId, user, vote, now)
+      views.html.motion(user, motion, now)
+    }
+    catch {
+      case e: IllegalStateException => views.html.error(List(("", e.getMessage)), parentUri)
+    }
+  }
 }
