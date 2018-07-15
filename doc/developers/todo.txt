@@ -1,13 +1,19 @@
 TO DO
 
+As a user, I would rather log in with my Google account than with basic auth so that I don't have to remember yet another password.
+As a constituent, I would like to view the proceedings so that I can be sure the members are behaving.
 Exception when submitting a username that does not exist.
 As a user, I would like motions to be persisted in a database so that we don't lose our entire archive whenever Dolan trips over the power cord.
 
+<at this point we can set up a demo instance>
+
 As a user, I would like to log out so that other people can log in and so that other people can't hijack my session.
 As a user, I would like to be confident that my password does not appear in a bunch of log files.
-As a user, I would like my password to be stored in a database rather than checked in to Git so that people can't just see it on GitHub and so that I can change it without waiting for a release.
-As a user, I would like my password to be hashed and salted so that if it is stoled by haxxorz they will not be able to use it to log in.
 As a user, I would like for exception traces to be hidden from web visitors so that attackers find it harder to recon the server, so that they have more difficulty compromising my info.
+
+<at this point we can become self-hosting>
+
+[Need a spike: What do we have to add to be adopted by other orgs?]
 
 As a member, I would like to see deadlines in my local time.
 As a member, I would like to see the status of a motion on the motion detail view.
