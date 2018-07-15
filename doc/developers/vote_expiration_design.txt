@@ -19,6 +19,7 @@ Motion class:
 
 Motion companion object:
   Add an argument votedAt to the vote method, and pass it to the new parameter in the Motion class method.
+  Add an argument createdAt to the create method, and pass it as the deadline to the new Motion object.
   If vote catches an IllegalArgumentException, raise an IllegalStateException explaining that voting is over.
 
 Motion detail view:
@@ -33,3 +34,4 @@ Error detail view:
 Servlet:
   If we catch an IllegalStateException or fail form validation on the post vote route, render the error view, with a link to the motion the user tried to vote on.
   If we fail form validation on the post motion route, render the error view with a link to the homepage.
+  At the beginning of post motion and post vote routes, get the current time and pass it to the Motion call. Also pass the current time to the motion detail view.
