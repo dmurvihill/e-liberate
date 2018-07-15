@@ -1,0 +1,27 @@
+Feature: Log in with Google
+
+Stories:
+As a user, I would rather log in with my Google account than with basic auth so that I don't have to remember yet another password.
+
+Acceptance criteria:
+(user identity)
++ The "Hello, <name>" greeting should use the real first name of the member as the name.
+- Members should be looked up by email address.
+- When users provide valid authentication but they are not members, upon exiting the workflow they should see the same view as unauthenticated users.
+
+(auth workflow entry for unauthenticated users)
+- For unauthenticated users, a "Log in with Google" button appears instead of the greeting.
+- For unauthenticated users on the home page, a link that says "Log in to make a motion" appears instead of the "make a motion" form.
+- For unauthenticated users in the motion detail view, the "vote" buttons appear disabled, and a link that says "Log in to vote" appears below.
+- All login links direct the user to a Google login workflow.
+- (for the sneaky ones) When users take a protected action such as casting a vote without providing authentication or with invalid authentication, they are redirected into the Google login flow. (This is not a normal case since no links appear that could initiate a protected action.)
+
+(auth workflow exit: failure)
+- When users fail to authenticate, they are shown a page explaining that we couldn't verify their identity.
+- When users authenticate but they are not members, they are shown a page explaining that their email address is not registered to a member.
+- On both authentication failure pages, users see a link to gracefully exit the auth workflow.
+
+(auth workflow exit)
+- Upon exiting the auth workflow, users land back on the page they entered from.
+- For members who entered the auth workflow by taking a protected action, after they successfully authenticate their browser automatically retries the action.
+- For users who entered the auth workflow directly without going through the links on the web site, they land on the home page on exit.
